@@ -120,8 +120,6 @@ const partyColors = {
         const options = {
           'title':'Väljarbarometer september 2023',
           colors: Object.values(partyColors),
-
-          // legend: { position: 'bottom' }
         };
 
         options.colors.push("teal");
