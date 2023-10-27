@@ -19,11 +19,11 @@
 
       // Set a callback to run when the Google Visualization API is loaded.
       // Can instead be specified in load above
-      google.charts.setOnLoadCallback(drawChart);
-      google.charts.setOnLoadCallback(drawChart2);
+      google.charts.setOnLoadCallback(drawStacked);
+      google.charts.setOnLoadCallback(drawBars);
 
       // First callback
-      function drawChart() {
+      function drawStacked() {
 
         // Create the data table becomes private to function 
         // so second drawfunction can reuse "data" but w other data
@@ -60,13 +60,13 @@
         };
 
         // Instantiate and draw charts, passing in different data but same options.
-        const chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        const chart = new google.visualization.BarChart(document.getElementById('stackedChart'));
         chart.draw(data, options);
 
       }
 
       // Second callback to draw second chart
-      function drawChart2() {
+      function drawBarsV() {
 
         const data = google.visualization.arrayToDataTable([
           ['Parti', 'Andel %', {role: 'style'}],
@@ -95,10 +95,11 @@
           title:'Väljarbarometer september 2023',
           colors: Object.values(partyColors),
           legend: {position: 'none'},
+
         };
 
-        const chart2 = new google.visualization.BarChart(document.getElementById('chart_div2'));
-        chart2.draw(view, options);
+        const chart = new google.visualization.ColumnChart(document.getElementById('barChartV'));
+        chart.draw(view, options);
       }
     </script>
   </head>
@@ -106,8 +107,8 @@
   <body>
     <!--Div that will hold the chart-->
     
-      <div id="chart_div" style="width: 100%; min-height: 450px;"></div>
-      <div id="chart_div2" style="width: 100%; min-height: 450px;"></div>
+      <div id="stackedChart" style="width: 100%; min-height: 450px;"></div>
+      <div id="barChartV" style="width: 100%; min-height: 450px;"></div>
     
   </body>
 </html>
