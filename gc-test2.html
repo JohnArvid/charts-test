@@ -29,25 +29,25 @@
         // so second drawfunction can reuse "data" but w other data
         const data = new google.visualization.arrayToDataTable([
           ['Parti', 
-            'V', {role: 'annotation'}, {role: 'style'}, 
-            'MP', {role: 'annotation'}, {role: 'style'},
-            'S', {role: 'annotation'}, {role: 'style'},
-            'C', {role: 'annotation'}, {role: 'style'},
-            'L', {role: 'annotation'}, {role: 'style'},
-            'M', {role: 'annotation'}, {role: 'style'},
-            'KD', {role: 'annotation'}, {role: 'style'},
-            'SD', {role: 'annotation'}, {role: 'style'},
-            'Övr', {role: 'annotation'}, {role: 'style'},],
+            'V', {role: 'annotation'}, 
+            'MP', {role: 'annotation'}, 
+            'S', {role: 'annotation'}, 
+            'C', {role: 'annotation'}, 
+            'L', {role: 'annotation'}, 
+            'M', {role: 'annotation'}, 
+            'KD', {role: 'annotation'}, 
+            'SD', {role: 'annotation'}, 
+            'Övr', {role: 'annotation'}, ],
           [ '', 
-            7.6, '', partyColors.v,
-            5.2, '', partyColors.mp,
-            38.6, '', partyColors.s,
-            4.0, '', partyColors.c,
-            3.0, '', partyColors.l,
-            18.4, '', partyColors.m,
-            2.6, '', partyColors.kd,
-            19.0, '', partyColors.sd,
-            1.5, '', partyColors.ovr,]
+            7.6, '',
+            5.2, '', 
+            38.6, '', 
+            4.0, '', 
+            3.0, '', 
+            18.4, '', 
+            2.6, '', 
+            19.0, '', 
+            1.5, '', ]
         ]);
 
         // Set chart options
@@ -56,6 +56,7 @@
         const options = {
           'title':'Väljarbarometer september 2023',
           'isStacked': 'percent',
+          colors: Object.values(partyColors),
         };
 
         // Instantiate and draw charts, passing in different data but same options.
@@ -90,7 +91,11 @@
 
         // Set chart options
         // Options can be reused for multiple charts (same w data ofc)
-        const options = {'title':'Väljarbarometer september 2023'};
+        const options = {
+          title:'Väljarbarometer september 2023',
+          colors: Object.values(partyColors),
+          legend: {position: 'none'},
+        };
 
         const chart2 = new google.visualization.BarChart(document.getElementById('chart_div2'));
         chart2.draw(view, options);
