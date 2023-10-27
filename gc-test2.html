@@ -5,17 +5,18 @@
     <script>
 
       // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
+      google.charts.load('current', {'packages':['corechart', 'table'],'language': 'sv'});
 
       // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawCharts);
+      // Can instead be specified in load above
+      google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(drawChart2);
 
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawCharts() {
+      // First callback
+      function drawChart() {
 
-        // Create the data table.
+        // Create the data table becomes private to function 
+        // so second drawfunction can reuse "data" but w other data
         const data = new google.visualization.DataTable();
         data.addColumn('string', 'Parti');
         data.addColumn('number', 'Andel %');
@@ -30,37 +31,56 @@
           ['SD', 19.0],
           ['Övr', 1.5]
         ]);
-        const data2 = new google.visualization.DataTable();
-        data2.addColumn('string', 'Parti');
-        data2.addColumn('number', 'Andel %');
-        data2.addRows([
-          ['V', 100],
-          ['MP', 5.2],
-          ['S', 38.6],
-          ['C', 4.0],
-          ['L', 3.0],
-          ['M', 18.4],
-          ['KD', 2.6],
-          ['SD', 19.0],
-          ['Övr', 1.5]
-        ]);
 
         // Set chart options
+        // Options can be reused for multiple charts (same w data ofc)
         const options = {'title':'Väljarbarometer september 2023'};
 
-        // Instantiate and draw our chart, passing in some options.
+        // Instantiate and draw charts, passing in different data but same options.
         const chart = new google.visualization.BarChart(document.getElementById('chart_div'));
         chart.draw(data, options);
+
+      }
+
+      // Second callback to draw second chart
+      function drawChart2() {
+
+        const data = google.visualization.arrayToDataTable([
+          ['Parti', 'Andel %', {role: 'style'}],
+          ['V', 100, '#f00'],
+          ['MP', 5.2, '#0f0'],
+          ['S', 38.6, '#f40'],
+          ['C', 4.0, '#f40'],
+          ['L', 3.0, '#f40'],
+          ['M', 18.4, '#f40'],
+          ['KD', 2.6, '#f40'],
+          ['SD', 19.0, '#f40'],
+          ['Övr', 1.5, '#f40']
+        ]);
+        
+        const view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+        // Set chart options
+        // Options can be reused for multiple charts (same w data ofc)
+        const options = {'title':'Väljarbarometer september 2023'};
+
         const chart2 = new google.visualization.BarChart(document.getElementById('chart_div2'));
-        chart2.draw(data2, options);
+        chart2.draw(view, options);
       }
     </script>
   </head>
 
   <body>
-    <!--Div that will hold the pie chart-->
-    <div id="chart_div" style="width: 100%; min-height: 450px;"></div>
-    <div id="chart_div2" style="width: 100%; min-height: 450px;"></div>
-
+    <!--Div that will hold the chart-->
+    <div style="display: flex;">
+      <div id="chart_div" style="width: 100%; min-height: 450px;"></div>
+      <div id="chart_div2" style="width: 100%; min-height: 450px;"></div>
+    </div>
   </body>
 </html>
