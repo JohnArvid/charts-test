@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawCharts);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawCharts() {
+
+        // Create the data table.
+        const data = new google.visualization.DataTable();
+        data.addColumn('string', 'Parti');
+        data.addColumn('number', 'Andel %');
+        data.addRows([
+          ['V', 7.6],
+          ['MP', 5.2],
+          ['S', 38.6],
+          ['C', 4.0],
+          ['L', 3.0],
+          ['M', 18.4],
+          ['KD', 2.6],
+          ['SD', 19.0],
+          ['Övr', 1.5]
+        ]);
+        const data2 = new google.visualization.DataTable();
+        data2.addColumn('string', 'Parti');
+        data2.addColumn('number', 'Andel %');
+        data2.addRows([
+          ['V', 100],
+          ['MP', 5.2],
+          ['S', 38.6],
+          ['C', 4.0],
+          ['L', 3.0],
+          ['M', 18.4],
+          ['KD', 2.6],
+          ['SD', 19.0],
+          ['Övr', 1.5]
+        ]);
+
+        // Set chart options
+        const options = {'title':'Väljarbarometer september 2023'};
+
+        // Instantiate and draw our chart, passing in some options.
+        const chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        const chart2 = new google.visualization.BarChart(document.getElementById('chart_div2'));
+        chart2.draw(data2, options);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div" style="width: 100%; min-height: 450px;"></div>
+    <div id="chart_div2" style="width: 100%; min-height: 450px;"></div>
+
+  </body>
+</html>
