@@ -3,7 +3,17 @@
     <!--Load the AJAX API-->
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
-
+      const partyColors = {
+        v:  '#ed1c24',
+        mp: '#53a045',
+        s:  '#ed1b34',
+        c:  '#046a38',
+        l:  '#006ab3',
+        m:  '#0d9ddb',
+        kd: '#005ea1',
+        sd: '#e2b404',
+        ovr:  '#808080',
+      }
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart', 'table'],'language': 'sv'});
 
@@ -17,24 +27,36 @@
 
         // Create the data table becomes private to function 
         // so second drawfunction can reuse "data" but w other data
-        const data = new google.visualization.DataTable();
-        data.addColumn('string', 'Parti');
-        data.addColumn('number', 'Andel %');
-        data.addRows([
-          ['V', 7.6],
-          ['MP', 5.2],
-          ['S', 38.6],
-          ['C', 4.0],
-          ['L', 3.0],
-          ['M', 18.4],
-          ['KD', 2.6],
-          ['SD', 19.0],
-          ['Övr', 1.5]
+        const data = new google.visualization.arrayToDataTable([
+          ['Parti', 
+            'V', {role: 'annotation'}, {role: 'style'}, 
+            'MP', {role: 'annotation'}, {role: 'style'},
+            'S', {role: 'annotation'}, {role: 'style'},
+            'C', {role: 'annotation'}, {role: 'style'},
+            'L', {role: 'annotation'}, {role: 'style'},
+            'M', {role: 'annotation'}, {role: 'style'},
+            'KD', {role: 'annotation'}, {role: 'style'},
+            'SD', {role: 'annotation'}, {role: 'style'},
+            'Övr', {role: 'annotation'}, {role: 'style'},],
+          [ '', 
+            7.6, '', partyColors.v,
+            5.2, '', partyColors.mp,
+            38.6, '', partyColors.s,
+            4.0, '', partyColors.c,
+            3.0, '', partyColors.l,
+            18.4, '', partyColors.m,
+            2.6, '', partyColors.kd,
+            19.0, '', partyColors.sd,
+            1.5, '', partyColors.ovr,]
         ]);
 
         // Set chart options
         // Options can be reused for multiple charts (same w data ofc)
-        const options = {'title':'Väljarbarometer september 2023'};
+        // As long as the objects are in scope for the draw funtion...
+        const options = {
+          'title':'Väljarbarometer september 2023',
+          'isStacked': 'percent',
+        };
 
         // Instantiate and draw charts, passing in different data but same options.
         const chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -47,15 +69,15 @@
 
         const data = google.visualization.arrayToDataTable([
           ['Parti', 'Andel %', {role: 'style'}],
-          ['V', 100, '#f00'],
-          ['MP', 5.2, '#0f0'],
-          ['S', 38.6, '#f40'],
-          ['C', 4.0, '#f40'],
-          ['L', 3.0, '#f40'],
-          ['M', 18.4, '#f40'],
-          ['KD', 2.6, '#f40'],
-          ['SD', 19.0, '#f40'],
-          ['Övr', 1.5, '#f40']
+          ['V', 7.6, partyColors.v],
+          ['MP', 5.2, partyColors.mp],
+          ['S', 38.6, partyColors.s],
+          ['C', 4.0, partyColors.c],
+          ['L', 3.0, partyColors.l],
+          ['M', 18.4, partyColors.m],
+          ['KD', 2.6, partyColors.kd],
+          ['SD', 19.0, partyColors.sd],
+          ['Övr', 1.5, partyColors.ovr]
         ]);
         
         const view = new google.visualization.DataView(data);
@@ -78,9 +100,9 @@
 
   <body>
     <!--Div that will hold the chart-->
-    <div style="display: flex;">
+    
       <div id="chart_div" style="width: 100%; min-height: 450px;"></div>
       <div id="chart_div2" style="width: 100%; min-height: 450px;"></div>
-    </div>
+    
   </body>
 </html>
