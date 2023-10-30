@@ -133,6 +133,12 @@ function drawBarsV() {
   options.legend = {position: 'none'};
 
   const data = google.visualization.arrayToDataTable([
+    currentData.seriesNames,
+    currentData.results, 
+    ]);
+
+/*
+  const data = google.visualization.arrayToDataTable([
     ['Parti', 'Andel %', {role: 'style'}, {role: 'tooltip'}],
     ['V', currentData.results[1], options.colors[0], `Förändring sedan senaste mätning ${currentData.changeSinceLast[1]}`],
     ['MP', currentData.results[2], options.colors[1], `Förändring sedan senaste mätning ${currentData.changeSinceLast[2]}`],
@@ -144,19 +150,16 @@ function drawBarsV() {
     ['SD', currentData.results[8], options.colors[7], `Förändring sedan senaste mätning ${currentData.changeSinceLast[8]}`],
     ['Övr', currentData.results[9], options.colors[8], `Förändring sedan senaste mätning ${currentData.changeSinceLast[9]}`]
   ]);
+*/
+
 
   
   const view = new google.visualization.DataView(data);
-  view.setColumns([0, 1,
-                 { calc: "stringify",
-                   sourceColumn: 1,
-                   type: "string",
-                   role: "annotation" },
-                 2, 3]);
+  view.setColumns([0, 1]);
 
 
   const chart = new google.visualization.ColumnChart(document.getElementById('barChartV'));
-  chart.draw(view, options);
+  chart.draw(data, options);
 }
 
 
