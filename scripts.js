@@ -161,7 +161,6 @@ function drawBarsV() {
 
 
 
-
 function drawLines() {
 
   const options = new Options();
