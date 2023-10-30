@@ -136,7 +136,7 @@ function drawBarsV() {
     currentData.seriesNames,
     currentData.results, 
     ]);
-
+  
 /*
   const data = google.visualization.arrayToDataTable([
     ['Parti', 'Andel %', {role: 'style'}, {role: 'tooltip'}],
