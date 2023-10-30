@@ -22,28 +22,28 @@ const currentData = {
       2.9, 
       22.0,  
       1.8, ],
-  seriesNames:  ['Parti', 
-      'V',  
-      'MP',
-      'S', 
-      'C', 
-      'L', 
-      'M',  
-      'KD', 
-      'SD', 
-      'Övr', ],
+  seriesNames:  [
+    'Parti', 
+    'V',  
+    'MP',
+    'S', 
+    'C', 
+    'L', 
+    'M',  
+    'KD', 
+    'SD', 
+    'Övr', ],
   changeSinceLast: [
-      0.5,
-      -0.4, 
-      -0.7,
-      0.1,
-      -0.7,
-      -2.3,
-      0.3,
-      3,0,
-      0.3,
-      0.3,
-      -0.5, ],
+    'Förändring sedan senaste mätning ',
+    0.5,
+    -0.4, 
+    -0.7,
+    0.1,
+    -0.7,
+    -2.3,
+    0.3,
+    3.0,
+    0.3 ],
   month: "September",
   year: 2023,
   history: [
@@ -67,6 +67,7 @@ const currentData = {
 function Options() {
   this.title = `Väljarbarometer ${currentData.month} ${currentData.year}`,
   this.colors = Object.values(partyColors);
+  this.fontName = 'Questrial'
 }
 
 
@@ -80,6 +81,7 @@ google.charts.setOnLoadCallback(drawCharts);
 
 
 function drawCharts() {
+  drawChange();
   drawStacked();
   drawBarsV();
   drawLines();
@@ -88,6 +90,22 @@ function drawCharts() {
 
 
 // CALLBACKS TO DRAW CHARTS
+
+function drawChange() {
+
+  const options = new Options();
+  options.legend = {position: 'none'};
+
+  
+  const data = new google.visualization.arrayToDataTable([
+    currentData.seriesNames,
+    currentData.changeSinceLast,
+  ]);
+
+
+  const chart = new google.visualization.ColumnChart(document.getElementById('changeChart'));
+  chart.draw(data, options);
+}
 
 
 function drawStacked() {
@@ -101,7 +119,7 @@ function drawStacked() {
     currentData.results,
   ]);
 
-  // Instantiate and draw charts, passing in different data but same options.
+
   const chart = new google.visualization.BarChart(document.getElementById('stackedChart'));
   chart.draw(data, options);
 }
@@ -116,15 +134,15 @@ function drawBarsV() {
 
   const data = google.visualization.arrayToDataTable([
     ['Parti', 'Andel %', {role: 'style'}, {role: 'tooltip'}],
-    ['V', currentData.results[1], options.colors[0], `Förändring sedan senaste mätning ${currentData.changeSinceLast[0]}`],
-    ['MP', currentData.results[2], options.colors[1], `Förändring sedan senaste mätning ${currentData.changeSinceLast[1]}`],
-    ['S', currentData.results[3], options.colors[2], `Förändring sedan senaste mätning ${currentData.changeSinceLast[2]}`],
-    ['C', currentData.results[4], options.colors[3], `Förändring sedan senaste mätning ${currentData.changeSinceLast[3]}`],
-    ['L', currentData.results[5], options.colors[4], `Förändring sedan senaste mätning ${currentData.changeSinceLast[4]}`],
-    ['M', currentData.results[6], options.colors[5],`Förändring sedan senaste mätning ${currentData.changeSinceLast[5]}`],
-    ['KD', currentData.results[7], options.colors[6], `Förändring sedan senaste mätning ${currentData.changeSinceLast[6]}`],
-    ['SD', currentData.results[8], options.colors[7], `Förändring sedan senaste mätning ${currentData.changeSinceLast[7]}`],
-    ['Övr', currentData.results[9], options.colors[8], `Förändring sedan senaste mätning ${currentData.changeSinceLast[8]}`]
+    ['V', currentData.results[1], options.colors[0], `Förändring sedan senaste mätning ${currentData.changeSinceLast[1]}`],
+    ['MP', currentData.results[2], options.colors[1], `Förändring sedan senaste mätning ${currentData.changeSinceLast[2]}`],
+    ['S', currentData.results[3], options.colors[2], `Förändring sedan senaste mätning ${currentData.changeSinceLast[3]}`],
+    ['C', currentData.results[4], options.colors[3], `Förändring sedan senaste mätning ${currentData.changeSinceLast[4]}`],
+    ['L', currentData.results[5], options.colors[4], `Förändring sedan senaste mätning ${currentData.changeSinceLast[5]}`],
+    ['M', currentData.results[6], options.colors[5],`Förändring sedan senaste mätning ${currentData.changeSinceLast[6]}`],
+    ['KD', currentData.results[7], options.colors[6], `Förändring sedan senaste mätning ${currentData.changeSinceLast[7]}`],
+    ['SD', currentData.results[8], options.colors[7], `Förändring sedan senaste mätning ${currentData.changeSinceLast[8]}`],
+    ['Övr', currentData.results[9], options.colors[8], `Förändring sedan senaste mätning ${currentData.changeSinceLast[9]}`]
   ]);
 
   
@@ -143,7 +161,7 @@ function drawBarsV() {
 
 
 
-// LINECHART callback
+
 function drawLines() {
 
   const options = new Options();
@@ -156,7 +174,6 @@ function drawLines() {
 
 
 
-// LINECHART callback
 function drawLinesByBlock() {
 
   const options = new Options();
