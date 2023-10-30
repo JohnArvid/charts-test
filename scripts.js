@@ -33,6 +33,11 @@ const stackedData = {
       'Övr', ],
 }
 
+function Options() {
+  this.title = 'Väljarbarometer september 2023',
+  this.colors = Object.values(partyColors);
+}
+
 
 const optionsStacked = {
   'title':'Väljarbarometer september 2023',
@@ -40,19 +45,7 @@ const optionsStacked = {
   colors: Object.values(partyColors),
 };
 
-const optionsBarV = {
-    title:'Väljarbarometer september 2023',
-    colors: Object.values(partyColors),
-    legend: {position: 'none'},
-    animation: {
-      startup: 'true'}
-};
 
-
-const optionsLines = {
-    'title':'Väljarbarometer september 2023',
-    colors: Object.values(partyColors),
-  };
 
 
 // Load the Visualization API and the corechart package.
@@ -65,17 +58,23 @@ google.charts.setOnLoadCallback(drawBarsV);
 google.charts.setOnLoadCallback(drawLines);
 google.charts.setOnLoadCallback(drawLinesByBlock);
 
-// First callback
+
+
+
+// CALLBACKS TO DRAW CHARTS
+
+
 function drawStacked() {
 
-  // Create the data table becomes private to function 
-  // so second drawfunction can reuse "data" but w other data
+  // Create the data table, becomes private to function 
+  // so other drawfunctions can reuse "data" but w other data
   const data = new google.visualization.arrayToDataTable([
     stackedData.seriesNames,
     stackedData.results,
   ]);
 
-  const options = optionsStacked;
+  const options = new Options();
+  options.isStacked = 'percent';
 
   // Instantiate and draw charts, passing in different data but same options.
   const chart = new google.visualization.BarChart(document.getElementById('stackedChart'));
@@ -86,21 +85,24 @@ function drawStacked() {
 
 
 
-// Second callback to draw second chart
 function drawBarsV() {
+
+  const options = new Options();
+  options.legend = {position: 'none'};
 
   const data = google.visualization.arrayToDataTable([
     ['Parti', 'Andel %', {role: 'style'}],
-    ['V', 7.6, partyColors.v],
-    ['MP', 5.2, partyColors.mp],
-    ['S', 38.6, partyColors.s],
-    ['C', 4.0, partyColors.c],
-    ['L', 3.0, partyColors.l],
-    ['M', 18.4, partyColors.m],
-    ['KD', 2.6, partyColors.kd],
-    ['SD', 19.0, partyColors.sd],
-    ['Övr', 1.5, partyColors.ovr]
+    ['V', 7.6, options.colors[0]],
+    ['MP', 5.2, options.colors[1]],
+    ['S', 38.6, options.colors[2]],
+    ['C', 4.0, options.colors[3]],
+    ['L', 3.0, options.colors[4]],
+    ['M', 18.4, options.colors[5]],
+    ['KD', 2.6, options.colors[6]],
+    ['SD', 19.0, options.colors[7]],
+    ['Övr', 1.5, options.colors[8]]
   ]);
+
   
   const view = new google.visualization.DataView(data);
   view.setColumns([0, 1,
@@ -110,20 +112,18 @@ function drawBarsV() {
                    role: "annotation" },
                  2]);
 
-  // Set chart options
-  // Options can be reused for multiple charts (same w data ofc)
-  const options = optionsBarV;
- 
 
   const chart = new google.visualization.ColumnChart(document.getElementById('barChartV'));
   chart.draw(view, options);
 }
 
+
+
 // LINECHART callback
 function drawLines() {
 
-  // Create the data table becomes private to function 
-  // so second drawfunction can reuse "data" but w other data
+  const options = new Options();
+ 
   const data = new google.visualization.arrayToDataTable([
     ['Tidpunkt','Vänsterpartiet','Miljöpartiet','Socialdemokraterna','Centerpartiet','Liberalerna','Moderaterna','Kristdemokraterna','Sverigedemokraterna','Övriga'],
     ['Valresultatet 2022',6.8,5.1,30.3,6.7,4.6,19.1,5.3,20.5,1.5],
@@ -133,17 +133,8 @@ function drawLines() {
     //['Förändring sedan föregående mätning',0.5,-0.4,-0.7,0.1,-0.7,-2.3,0.3,3,0,0.3,0.3,-0.5],
   ]);
 
-  // Set chart options
-  // Options can be reused for multiple charts (same w data ofc)
-  // As long as the objects are in scope for the draw funtion...
-  const options = optionsLines;
 
-  options.colors.push("teal");
-  options.colors.push("teal");
 
-  console.log(options.colors);
-
-  // Instantiate and draw charts, passing in data and options.
   const chart = new google.visualization.LineChart(document.getElementById('lineChart'));
   chart.draw(data, options);
 
@@ -154,27 +145,18 @@ function drawLines() {
 // LINECHART callback
 function drawLinesByBlock() {
 
-  // Create the data table becomes private to function 
-  // so second drawfunction can reuse "data" but w other data
+  const options = new Options();
+  options.colors = [partyColors.m, partyColors.s];
+
   const data = new google.visualization.arrayToDataTable([
     ['Tidpunkt','M/L/KD/SD','S/V/MP/C'],
     ['Valresultatet 2022', 49.5, 48.9],
     ['Juni (2023)', 43.9, 53.7],
     ['September (2023)', 43.0, 55.4],
     ['Oktober (2023)', 43.3, 54.9],
-    //['Förändring sedan föregående mätning',0.5,-0.4,-0.7,0.1,-0.7,-2.3,0.3,3,0,0.3,0.3,-0.5],
   ]);
 
-  // Set chart options
-  // Options can be reused for multiple charts (same w data ofc)
-  // As long as the objects are in scope for the draw funtion...
-  const options = optionsLines;
 
-  options.colors = [partyColors.m, partyColors.s];
-
-  console.log(options.colors);
-
-  // Instantiate and draw charts, passing in data and options.
   const chart = new google.visualization.LineChart(document.getElementById('lineChartByBlock'));
   chart.draw(data, options);
 
