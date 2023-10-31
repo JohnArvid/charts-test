@@ -130,25 +130,15 @@ function drawBarsV() {
   const options = new Options();
   options.legend = {position: 'none'};
 
-  const data = google.visualization.arrayToDataTable([
-    ['Parti', ...currentData.seriesNames],
-    ['', ...currentData.results],
-    ]);
+
+  const dataArray = currentData.seriesNames.map( (party, i) => {
+    return [party, currentData.results[i], Object.values(partyColors)[i], `Förändring sedan senaste mätning ${currentData.changeSinceLast[i]}` ];
+})
   
-/*
+
   const data = google.visualization.arrayToDataTable([
-    ['Parti', 'Andel %', {role: 'style'}, {role: 'tooltip'}],
-    ['V', currentData.results[1], options.colors[0], `Förändring sedan senaste mätning ${currentData.changeSinceLast[1]}`],
-    ['MP', currentData.results[2], options.colors[1], `Förändring sedan senaste mätning ${currentData.changeSinceLast[2]}`],
-    ['S', currentData.results[3], options.colors[2], `Förändring sedan senaste mätning ${currentData.changeSinceLast[3]}`],
-    ['C', currentData.results[4], options.colors[3], `Förändring sedan senaste mätning ${currentData.changeSinceLast[4]}`],
-    ['L', currentData.results[5], options.colors[4], `Förändring sedan senaste mätning ${currentData.changeSinceLast[5]}`],
-    ['M', currentData.results[6], options.colors[5],`Förändring sedan senaste mätning ${currentData.changeSinceLast[6]}`],
-    ['KD', currentData.results[7], options.colors[6], `Förändring sedan senaste mätning ${currentData.changeSinceLast[7]}`],
-    ['SD', currentData.results[8], options.colors[7], `Förändring sedan senaste mätning ${currentData.changeSinceLast[8]}`],
-    ['Övr', currentData.results[9], options.colors[8], `Förändring sedan senaste mätning ${currentData.changeSinceLast[9]}`]
-  ]);
-*/
+    ['Parti', 'Andel %', {role: 'style'}, {role: 'tooltip'}],...dataArray ]);
+
 
 
   
