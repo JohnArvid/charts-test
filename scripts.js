@@ -12,18 +12,17 @@ const partyColors = {
 
 
 const currentData = {
-  results: [ '', 
-      8.1, 
-      4.2,  
-      37.9,  
-      4.1,  
-      2.3,  
-      16.1,  
-      2.9, 
-      22.0,  
-      1.8, ],
+  results: [ 
+    8.1, 
+    4.2,  
+    37.9,  
+    4.1,  
+    2.3,  
+    16.1,  
+    2.9, 
+    22.0,  
+    1.8, ],
   seriesNames:  [
-    'Parti', 
     'V',  
     'MP',
     'S', 
@@ -34,7 +33,6 @@ const currentData = {
     'SD', 
     'Övr', ],
   changeSinceLast: [
-    'Förändring sedan senaste mätning ',
     0.5,
     -0.4, 
     -0.7,
@@ -98,8 +96,8 @@ function drawChange() {
 
   
   const data = new google.visualization.arrayToDataTable([
-    currentData.seriesNames,
-    currentData.changeSinceLast,
+    ['Parti', ...currentData.seriesNames],
+    ['Förändring sedan senaste mätning ', ...currentData.changeSinceLast],
   ]);
 
 
@@ -115,8 +113,8 @@ function drawStacked() {
 
   
   const data = new google.visualization.arrayToDataTable([
-    currentData.seriesNames,
-    currentData.results,
+    ['Parti', ...currentData.seriesNames],
+    ['', ...currentData.results],
   ]);
 
 
@@ -133,8 +131,8 @@ function drawBarsV() {
   options.legend = {position: 'none'};
 
   const data = google.visualization.arrayToDataTable([
-    currentData.seriesNames,
-    currentData.results, 
+    ['Parti', ...currentData.seriesNames],
+    ['', ...currentData.results],
     ]);
   
 /*
