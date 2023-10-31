@@ -69,12 +69,10 @@ function Options() {
 }
 
 
-
 // Load the Visualization API and the corechart package.
 google.charts.load('current', {'packages':['corechart', 'table'],'language': 'sv'});
 
 // Set a callback to run when the Google Visualization API is loaded.
-// Can instead be specified in load above
 google.charts.setOnLoadCallback(drawCharts);
 
 
@@ -87,7 +85,7 @@ function drawCharts() {
 }
 
 
-// CALLBACKS TO DRAW CHARTS
+// FUNCTIONS TO DRAW CHARTS
 
 function drawChange() {
 
