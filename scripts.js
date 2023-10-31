@@ -44,7 +44,7 @@ const currentData = {
     0.3,
     3.0,
     0.3 ],
-  month: "September",
+  month: "Oktober",
   year: 2023,
   history: [
     ['Tidpunkt','Vänsterpartiet','Miljöpartiet','Socialdemokraterna','Centerpartiet','Liberalerna','Moderaterna','Kristdemokraterna','Sverigedemokraterna','Övriga'],
