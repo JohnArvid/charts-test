@@ -55,10 +55,10 @@ const partyData = {
 
 const blockData = {
   results: [ 43.3, 54.9 ], 
-  seriesNames:  ['S/V/MP/C', 'M/L/KD/SD', ],
+  seriesNames:  [ 'M/L/KD/SD', 'S/V/MP/C', ],
   seriesColors : {
-    s:  '#ed1b34',
     m:  '#0d9ddb',
+    s:  '#ed1b34',
   },
   history: [
     ['Tidpunkt','M/L/KD/SD','S/V/MP/C'],
@@ -88,8 +88,8 @@ function drawCharts() {
   drawChange();
   drawStacked();
   drawBarsV();
-  drawLines();
-  drawLinesByBlock();
+  drawLines(partyData, 'lineChart');
+  drawLines(blockData, 'lineChartByBlock');
 }
 
 
@@ -158,26 +158,15 @@ function drawBarsV() {
 
 
 
-function drawLines() {
+function drawLines(dataObject, chartId) {
 
   const options = new Options();
+  options.colors = Object.values(dataObject.seriesColors);
  
-  const data = new google.visualization.arrayToDataTable(partyData.history);
+  const data = new google.visualization.arrayToDataTable(dataObject.history);
 
-  const chart = new google.visualization.LineChart(document.getElementById('lineChart'));
+  const chart = new google.visualization.LineChart(document.getElementById(chartId));
   chart.draw(data, options);
 }
 
-
-
-function drawLinesByBlock() {
-
-  const options = new Options();
-  options.colors = Object.values(blockData.seriesColors);
-
-  const data = new google.visualization.arrayToDataTable(blockData.history);
-
-  const chart = new google.visualization.LineChart(document.getElementById('lineChartByBlock'));
-  chart.draw(data, options);
-}
 
