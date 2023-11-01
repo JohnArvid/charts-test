@@ -87,6 +87,7 @@ const ministerData = {
 
 }
 
+
 // Constructor for options object
 function Options() {
   this.title = `Väljarbarometer ${partyData.month} ${partyData.year}`,
@@ -103,9 +104,9 @@ google.charts.setOnLoadCallback(drawCharts);
 
 
 function drawCharts() {
-  drawChange();
-  drawStacked();
-  drawBarsV();
+  drawChange(partyData, 'changeChart');
+  drawStacked(partyData, 'stackedChart');
+  drawBarsV(partyData, 'barChartV');
   drawLines(partyData, 'lineChart');
   drawLines(blockData, 'lineChartByBlock');
   drawLines(ministerData, 'lineChartByMinister');
@@ -114,50 +115,50 @@ function drawCharts() {
 
 // FUNCTIONS TO DRAW CHARTS
 
-function drawChange() {
+function drawChange(dataObject, chartId) {
 
   const options = new Options();
   options.legend = {position: 'none'};
 
   
   const data = new google.visualization.arrayToDataTable([
-    ['Parti', ...partyData.seriesNames],
-    ['Förändring sedan senaste mätning ', ...partyData.changeSinceLast],
+    ['Parti', ...dataObject.seriesNames],
+    ['Förändring sedan senaste mätning ', ...dataObject.changeSinceLast],
   ]);
 
 
-  const chart = new google.visualization.ColumnChart(document.getElementById('changeChart'));
+  const chart = new google.visualization.ColumnChart(document.getElementById(chartId));
   chart.draw(data, options);
 }
 
 
-function drawStacked() {
+function drawStacked(dataObject, chartId) {
 
   const options = new Options();
   options.isStacked = 'percent';
 
   
   const data = new google.visualization.arrayToDataTable([
-    ['Parti', ...partyData.seriesNames],
-    ['', ...partyData.results],
+    ['Parti', ...dataObject.seriesNames],
+    ['', ...dataObject.results],
   ]);
 
 
-  const chart = new google.visualization.BarChart(document.getElementById('stackedChart'));
+  const chart = new google.visualization.BarChart(document.getElementById(chartId));
   chart.draw(data, options);
 }
 
 
 
 
-function drawBarsV() {
+function drawBarsV(dataObject, chartId) {
 
   const options = new Options();
   options.legend = {position: 'none'};
 
 
-  const dataArray = partyData.seriesNames.map( (party, i) => {
-    return [party, partyData.results[i], Object.values(partyData.seriesColors)[i], `Förändring sedan senaste mätning ${partyData.changeSinceLast[i]}` ];
+  const dataArray = dataObject.seriesNames.map( (party, i) => {
+    return [party, dataObject.results[i], Object.values(dataObject.seriesColors)[i], `Förändring sedan senaste mätning ${dataObject.changeSinceLast[i]}` ];
 })
   
 
@@ -165,13 +166,7 @@ function drawBarsV() {
     ['Parti', 'Andel %', {role: 'style'}, {role: 'tooltip'}],...dataArray ]);
 
 
-
-  
-  const view = new google.visualization.DataView(data);
-  view.setColumns([0, 1]);
-
-
-  const chart = new google.visualization.ColumnChart(document.getElementById('barChartV'));
+  const chart = new google.visualization.ColumnChart(document.getElementById(chartId));
   chart.draw(data, options);
 }
 
