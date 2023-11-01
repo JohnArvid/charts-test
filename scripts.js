@@ -1,17 +1,6 @@
-const partyColors = {
-  v:  '#ed1c24',
-  mp: '#53a045',
-  s:  '#ed1b34',
-  c:  '#046a38',
-  l:  '#006ab3',
-  m:  '#0d9ddb',
-  kd: '#005ea1',
-  sd: '#e2b404',
-  ovr:  '#808080',
-}
 
 
-const currentData = {
+const partyData = {
   results: [ 
     8.1, 
     4.2,  
@@ -32,6 +21,17 @@ const currentData = {
     'KD', 
     'SD', 
     'Övr', ],
+  seriesColors : {
+    v:  '#ed1c24',
+    mp: '#53a045',
+    s:  '#ed1b34',
+    c:  '#046a38',
+    l:  '#006ab3',
+    m:  '#0d9ddb',
+    kd: '#005ea1',
+    sd: '#e2b404',
+    ovr:  '#808080',
+  },
   changeSinceLast: [
     0.5,
     -0.4, 
@@ -63,8 +63,8 @@ const currentData = {
 
 // Constructor for options object
 function Options() {
-  this.title = `Väljarbarometer ${currentData.month} ${currentData.year}`,
-  this.colors = Object.values(partyColors);
+  this.title = `Väljarbarometer ${partyData.month} ${partyData.year}`,
+  this.colors = Object.values(partyData.seriesColors);
   this.fontName = 'Questrial'
 }
 
@@ -94,8 +94,8 @@ function drawChange() {
 
   
   const data = new google.visualization.arrayToDataTable([
-    ['Parti', ...currentData.seriesNames],
-    ['Förändring sedan senaste mätning ', ...currentData.changeSinceLast],
+    ['Parti', ...partyData.seriesNames],
+    ['Förändring sedan senaste mätning ', ...partyData.changeSinceLast],
   ]);
 
 
@@ -111,8 +111,8 @@ function drawStacked() {
 
   
   const data = new google.visualization.arrayToDataTable([
-    ['Parti', ...currentData.seriesNames],
-    ['', ...currentData.results],
+    ['Parti', ...partyData.seriesNames],
+    ['', ...partyData.results],
   ]);
 
 
@@ -129,8 +129,8 @@ function drawBarsV() {
   options.legend = {position: 'none'};
 
 
-  const dataArray = currentData.seriesNames.map( (party, i) => {
-    return [party, currentData.results[i], Object.values(partyColors)[i], `Förändring sedan senaste mätning ${currentData.changeSinceLast[i]}` ];
+  const dataArray = partyData.seriesNames.map( (party, i) => {
+    return [party, partyData.results[i], Object.values(partyData.seriesColors)[i], `Förändring sedan senaste mätning ${partyData.changeSinceLast[i]}` ];
 })
   
 
@@ -154,7 +154,7 @@ function drawLines() {
 
   const options = new Options();
  
-  const data = new google.visualization.arrayToDataTable(currentData.history);
+  const data = new google.visualization.arrayToDataTable(partyData.history);
 
   const chart = new google.visualization.LineChart(document.getElementById('lineChart'));
   chart.draw(data, options);
@@ -165,9 +165,9 @@ function drawLines() {
 function drawLinesByBlock() {
 
   const options = new Options();
-  options.colors = [partyColors.m, partyColors.s];
+  options.colors = [partyData.seriesColors.m, partyData.seriesColors.s];
 
-  const data = new google.visualization.arrayToDataTable(currentData.historyByBlock);
+  const data = new google.visualization.arrayToDataTable(partyData.historyByBlock);
 
   const chart = new google.visualization.LineChart(document.getElementById('lineChartByBlock'));
   chart.draw(data, options);
