@@ -158,12 +158,12 @@ function drawBarsV(dataObject, chartId) {
 
 
   const dataArray = dataObject.seriesNames.map( (party, i) => {
-    return [party, dataObject.results[i], Object.values(dataObject.seriesColors)[i], `Förändring sedan senaste mätning ${dataObject.changeSinceLast[i]}` ];
+    return [party, dataObject.results[i], dataObject.results[i], Object.values(dataObject.seriesColors)[i], `Förändring sedan senaste mätning ${dataObject.changeSinceLast[i]}` ];
 })
   
 
   const data = google.visualization.arrayToDataTable([
-    ['Parti', 'Andel %', {role: 'style'}, {role: 'tooltip'}],...dataArray ]);
+    ['Parti', 'Andel %', {role: 'annotation'}, {role: 'style'}, {role: 'tooltip'}],...dataArray ]);
 
 
   const chart = new google.visualization.ColumnChart(document.getElementById(chartId));
