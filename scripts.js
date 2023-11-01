@@ -51,7 +51,16 @@ const partyData = {
     ['September (2023)',7.6,5.2,38.6,4.0,3.0,18.4,2.6,19.0,1.5],
     ['Oktober (2023)',8.1,4.8,37.9,4.1,2.3,16.1,2.9,22.0,1.8],
   ],
-  historyByBlock: [
+}
+
+const blockData = {
+  results: [ 43.3, 54.9 ], 
+  seriesNames:  ['S/V/MP/C', 'M/L/KD/SD', ],
+  seriesColors : {
+    s:  '#ed1b34',
+    m:  '#0d9ddb',
+  },
+  history: [
     ['Tidpunkt','M/L/KD/SD','S/V/MP/C'],
     ['Valresultatet 2022', 49.5, 48.9],
     ['Juni (2023)', 43.9, 53.7],
@@ -59,7 +68,6 @@ const partyData = {
     ['Oktober (2023)', 43.3, 54.9],
   ],
 }
-
 
 // Constructor for options object
 function Options() {
@@ -165,10 +173,11 @@ function drawLines() {
 function drawLinesByBlock() {
 
   const options = new Options();
-  options.colors = [partyData.seriesColors.m, partyData.seriesColors.s];
+  options.colors = Object.values(blockData.seriesColors);
 
-  const data = new google.visualization.arrayToDataTable(partyData.historyByBlock);
+  const data = new google.visualization.arrayToDataTable(blockData.history);
 
   const chart = new google.visualization.LineChart(document.getElementById('lineChartByBlock'));
   chart.draw(data, options);
 }
+
