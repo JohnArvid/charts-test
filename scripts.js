@@ -57,8 +57,8 @@ const blockData = {
   results: [ 43.3, 54.9 ], 
   seriesNames:  [ 'M/L/KD/SD', 'S/V/MP/C', ],
   seriesColors : {
-    m:  '#0d9ddb',
-    s:  '#ed1b34',
+    m:  partyData.seriesColors.m,
+    s:  partyData.seriesColors.s,
   },
   history: [
     ['Tidpunkt','M/L/KD/SD','S/V/MP/C'],
@@ -67,6 +67,24 @@ const blockData = {
     ['September (2023)', 43.0, 55.4],
     ['Oktober (2023)', 43.3, 54.9],
   ],
+}
+
+
+const ministerData = {
+  results: [45,  18,  17,  20],
+  seriesNames: ['Magdalena Andersson', 'Ulf Kristersson', 'Jimmie Åkesson',  'Inget av alternativen'],
+  seriesColors: {
+    s: partyData.seriesColors.s,
+    m: partyData.seriesColors.m,
+    sd: partyData.seriesColors.sd,
+    ovr: partyData.seriesColors.ovr,
+  },
+  history: [
+    ['Tidpunkt','Magdalena Andersson', 'Ulf Kristersson', 'Jimmie Åkesson',  'Inget av alternativen'],
+    ['September (2023)',  48,  22,  13,  17],
+    ['Oktober (2023)',  45,  18,  17,  20],
+    ],
+
 }
 
 // Constructor for options object
@@ -90,6 +108,7 @@ function drawCharts() {
   drawBarsV();
   drawLines(partyData, 'lineChart');
   drawLines(blockData, 'lineChartByBlock');
+  drawLines(ministerData, 'lineChartByMinister');
 }
 
 
