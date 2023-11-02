@@ -131,11 +131,8 @@ function drawCharts() {
   drawLines(ministerData, 'lineChartByMinister');
 }
 
-window.onresize = reDrawCharts;
+window.onresize = drawCharts;
 
-function reDrawCharts() {
-  drawCharts();
-}
 
 
 // FUNCTIONS TO DRAW CHARTS
