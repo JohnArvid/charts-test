@@ -129,6 +129,7 @@ function drawCharts() {
   drawLines(partyData, 'lineChart');
   drawLines(blockData, 'lineChartByBlock');
   drawLines(ministerData, 'lineChartByMinister');
+  drawTable(partyData, 'table')
 }
 
 window.onresize = drawCharts;
@@ -217,3 +218,13 @@ function drawLines(dataObject, chartId) {
 }
 
 
+function drawTable(dataObject, chartId) {
+
+  const options = new Options();
+  //options.colors = Object.values(dataObject.seriesColors);
+ 
+  const data = new google.visualization.arrayToDataTable(dataObject.history);
+
+  const table = new google.visualization.Table(document.getElementById(chartId));
+  table.draw(data, options);
+}

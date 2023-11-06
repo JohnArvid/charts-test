@@ -19,6 +19,10 @@ div.chart {
 	height: 100%;
 }
 
+#table table.google-visualization-table-table {
+	font-family: 'Questrial';
+}
+
 @media screen and (max-width: 750px ){
 	div.chart-container {
 		min-height: 450px;
