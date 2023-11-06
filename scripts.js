@@ -110,16 +110,16 @@ function Options() {
 
 // Function for transposing data
 function transpose(matrix) {
-return matrix[0].map((col, i) => matrix.map(row => row[i]));
+  return matrix[0].map((col, i) => matrix.map(row => row[i]));
 }
 
-
 // Load the Visualization API and the corechart package.
-google.charts.load('current', {'packages':['corechart', 'table'],'language': 'sv'});
+google.charts.load(
+  'current', {'packages':['corechart', 'table'],'language': 'sv'}
+  );
 
 // Set a callback to run when the Google Visualization API is loaded.
 google.charts.setOnLoadCallback(drawCharts);
-
 
 function drawCharts() {
   drawChange(partyData, 'changeChart');
@@ -132,53 +132,56 @@ function drawCharts() {
   drawTable(partyData, 'table2', false);
 }
 
+// Listen for window resize and redraw charts 
 window.onresize = drawCharts;
-
 
 
 // FUNCTIONS TO DRAW CHARTS
 
+
+// Columns for change since last
 function drawChange(dataObject, chartId) {
 
   const options = new Options();
   options.legend = {position: 'none'};
-
   
   const data = new google.visualization.arrayToDataTable([
     ['Parti', ...dataObject.seriesNames],
     ['Förändring sedan senaste mätning ', ...dataObject.changeSinceLast],
   ]);
 
+  const chart = new google.visualization.ColumnChart(
+    document.getElementById(chartId)
+    );
 
-  const chart = new google.visualization.ColumnChart(document.getElementById(chartId));
   chart.draw(data, options);
 }
 
-
+// Stacked for spread across categories
 function drawStacked(dataObject, chartId) {
 
   const options = new Options();
   options.isStacked = 'percent';
-
   
   const data = new google.visualization.arrayToDataTable([
     ['Parti', ...dataObject.seriesNames],
     ['', ...dataObject.results],
   ]);
 
+  const chart = new google.visualization.BarChart(
+    document.getElementById(chartId)
+    );
 
-  const chart = new google.visualization.BarChart(document.getElementById(chartId));
   chart.draw(data, options);
 }
 
 
 
-
+// Columns for spread across categories
 function drawBarsV(dataObject, chartId) {
 
   const options = new Options();
   options.legend = {position: 'none'};
-
 
   const dataArray = dataObject.seriesNames.map( (party, i) => {
     return (
@@ -187,9 +190,8 @@ function drawBarsV(dataObject, chartId) {
         Object.values(dataObject.seriesColors)[i], 
         `Förändring sedan senaste mätning ${dataObject.changeSinceLast[i]}` ]
       );
-})
+  })
   
-
   const data = google.visualization.arrayToDataTable([
     ['Parti', 'Andel %', 
       {role: 'annotation'}, 
@@ -199,32 +201,40 @@ function drawBarsV(dataObject, chartId) {
     ...dataArray 
     ]);
 
+  const chart = new google.visualization.ColumnChart(
+    document.getElementById(chartId)
+    );
 
-  const chart = new google.visualization.ColumnChart(document.getElementById(chartId));
   chart.draw(data, options);
 }
 
 
-
+// Line chart or history/trendlines
 function drawLines(dataObject, chartId) {
 
   const options = new Options();
   options.colors = Object.values(dataObject.seriesColors);
  
   const data = new google.visualization.arrayToDataTable([
-    ['Tidpunkt', ...(dataObject.longSeriesNames ? dataObject.longSeriesNames : dataObject.seriesNames)],
+    ['Tidpunkt', ...(
+      dataObject.longSeriesNames ? 
+      dataObject.longSeriesNames : 
+      dataObject.seriesNames)],
     ...dataObject.history
     ]);
 
-  const chart = new google.visualization.LineChart(document.getElementById(chartId));
+  const chart = new google.visualization.LineChart(
+    document.getElementById(chartId)
+    );
+
   chart.draw(data, options);
 }
 
-
+// Table
 function drawTable(dataObject, chartId, transposeTable) {
 
   const options = new Options();
-  //options.colors = Object.values(dataObject.seriesColors);
+  options.frozenColumns = 1;
 
   let data;
   if(transposeTable) {
@@ -239,6 +249,9 @@ function drawTable(dataObject, chartId, transposeTable) {
     ]);
   }
 
-  const table = new google.visualization.Table(document.getElementById(chartId));
+  const table = new google.visualization.Table(
+    document.getElementById(chartId)
+    );
+  
   table.draw(data, options);
 }
