@@ -19,9 +19,13 @@ div.chart {
 	height: 100%;
 }
 
-#table table.google-visualization-table-table {
+div.chart table.google-visualization-table-table {
 	font-family: 'Questrial';
 }
+
+/*div.google-visualization-table {
+	min-width: 100%;
+}*/
 
 table.google-visualization-table-table th, 
 table.google-visualization-table-table td {

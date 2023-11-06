@@ -108,6 +108,11 @@ function Options() {
   this.fontName = 'Questrial'
 }
 
+// Function for transposing data
+function transpose(matrix) {
+return matrix[0].map((col, i) => matrix.map(row => row[i]));
+}
+
 
 // Load the Visualization API and the corechart package.
 google.charts.load('current', {'packages':['corechart', 'table'],'language': 'sv'});
@@ -123,7 +128,8 @@ function drawCharts() {
   drawLines(partyData, 'lineChart');
   drawLines(blockData, 'lineChartByBlock');
   drawLines(ministerData, 'lineChartByMinister');
-  drawTable(partyData, 'table')
+  drawTable(partyData, 'table', true);
+  drawTable(partyData, 'table2', false);
 }
 
 window.onresize = drawCharts;
@@ -215,15 +221,23 @@ function drawLines(dataObject, chartId) {
 }
 
 
-function drawTable(dataObject, chartId) {
+function drawTable(dataObject, chartId, transposeTable) {
 
   const options = new Options();
   //options.colors = Object.values(dataObject.seriesColors);
- 
-  const data = new google.visualization.arrayToDataTable([
+
+  let data;
+  if(transposeTable) {
+    data = new google.visualization.arrayToDataTable(transpose([
+    ['', ...dataObject.seriesNames],
+    ...dataObject.history
+    ]));
+  } else {
+    data = new google.visualization.arrayToDataTable([
     ['Tidpunkt', ...dataObject.seriesNames],
     ...dataObject.history
     ]);
+  }
 
   const table = new google.visualization.Table(document.getElementById(chartId));
   table.draw(data, options);
