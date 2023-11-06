@@ -78,7 +78,6 @@ const blockData = {
   ],
 }
 
-
 const ministerData = {
   results: [45,  18,  17,  20],
   seriesNames: [
@@ -97,7 +96,6 @@ const ministerData = {
     ['September (2023)',  48,  22,  13,  17],
     ['Oktober (2023)',  45,  18,  17,  20],
     ],
-
 }
 
 
@@ -137,7 +135,6 @@ window.onresize = drawCharts;
 
 
 // FUNCTIONS TO DRAW CHARTS
-
 
 // Columns for change since last
 function drawChange(dataObject, chartId) {
