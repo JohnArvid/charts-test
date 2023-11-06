@@ -21,6 +21,17 @@ const partyData = {
     'KD', 
     'SD', 
     'Övr', ],
+  longSeriesNames: [
+    'Vänsterpartiet',
+    'Miljöpartiet',
+    'Socialdemokraterna', 
+    'Centerpartiet', 
+    'Liberalerna', 
+    'Moderaterna', 
+    'Kristdemokraterna', 
+    'Sverigedemokraterna', 
+    'Övriga'
+    ],
   seriesColors : {
     v:  '#ed1c24',
     mp: '#53a045',
@@ -45,16 +56,6 @@ const partyData = {
   month: "Oktober",
   year: 2023,
   history: [
-    ['Tidpunkt',
-      'Vänsterpartiet',
-      'Miljöpartiet',
-      'Socialdemokraterna', 
-      'Centerpartiet', 
-      'Liberalerna', 
-      'Moderaterna', 
-      'Kristdemokraterna', 
-      'Sverigedemokraterna', 
-      'Övriga'],
     ['Valresultatet 2022',6.8,5.1,30.3,6.7,4.6,19.1,5.3,20.5,1.5],
     ['Juni (2023)', 7.8,5.0,36.6,4.3,3.0,18.5,4.1,18.3,2.4],
     ['September (2023)',7.6,5.2,38.6,4.0,3.0,18.4,2.6,19.0,1.5],
@@ -70,7 +71,6 @@ const blockData = {
     s:  partyData.seriesColors.s,
   },
   history: [
-    ['Tidpunkt','M/L/KD/SD','S/V/MP/C'],
     ['Valresultatet 2022', 49.5, 48.9],
     ['Juni (2023)', 43.9, 53.7],
     ['September (2023)', 43.0, 55.4],
@@ -94,12 +94,6 @@ const ministerData = {
     ovr: partyData.seriesColors.ovr,
   },
   history: [
-    ['Tidpunkt',
-      'Magdalena Andersson', 
-      'Ulf Kristersson', 
-      'Jimmie Åkesson',  
-      'Inget av alternativen',
-      ],
     ['September (2023)',  48,  22,  13,  17],
     ['Oktober (2023)',  45,  18,  17,  20],
     ],
@@ -211,7 +205,10 @@ function drawLines(dataObject, chartId) {
   const options = new Options();
   options.colors = Object.values(dataObject.seriesColors);
  
-  const data = new google.visualization.arrayToDataTable(dataObject.history);
+  const data = new google.visualization.arrayToDataTable([
+    ['Tidpunkt', ...(dataObject.longSeriesNames ? dataObject.longSeriesNames : dataObject.seriesNames)],
+    ...dataObject.history
+    ]);
 
   const chart = new google.visualization.LineChart(document.getElementById(chartId));
   chart.draw(data, options);
@@ -223,7 +220,10 @@ function drawTable(dataObject, chartId) {
   const options = new Options();
   //options.colors = Object.values(dataObject.seriesColors);
  
-  const data = new google.visualization.arrayToDataTable(dataObject.history);
+  const data = new google.visualization.arrayToDataTable([
+    ['Tidpunkt', ...dataObject.seriesNames],
+    ...dataObject.history
+    ]);
 
   const table = new google.visualization.Table(document.getElementById(chartId));
   table.draw(data, options);
