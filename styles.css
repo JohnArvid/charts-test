@@ -5,16 +5,17 @@ div.container {
 }
 
 div.chart-container {
-	/*	flex: 1;*/
-/*	width: 500px;*/
 	min-height: 450px;
-
 	width: 50%;
-
 }
-div.chart {
-/*	min-width: 100%;*/
+
+div.table-container {
 /*	min-height: 450px;*/
+	width: 50%;
+}
+
+
+div.chart {
 	width: 100%;
 	height: 100%;
 }
@@ -36,7 +37,15 @@ table.google-visualization-table-table td {
 	div.chart-container {
 		min-height: 450px;
 		margin: 0 auto;
-		width: 80%;
+		width: 90%;
+
+	}
+}
+
+@media screen and (max-width: 1274px ){
+	div.table-container {
+		margin: 2em auto;
+		width: 90%;
 
 	}
 }
