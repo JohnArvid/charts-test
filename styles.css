@@ -23,6 +23,11 @@ div.chart {
 	font-family: 'Questrial';
 }
 
+table.google-visualization-table-table th, 
+table.google-visualization-table-table td {
+	padding: 0.6em 1.35em;
+}
+
 @media screen and (max-width: 750px ){
 	div.chart-container {
 		min-height: 450px;
