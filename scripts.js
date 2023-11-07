@@ -143,7 +143,7 @@ function drawChange(dataObject, chartId) {
   options.legend = {position: 'none'};
   
   const data = new google.visualization.arrayToDataTable([
-    ['Parti', ...dataObject.seriesNames],
+    ['', ...dataObject.seriesNames],
     ['Förändring sedan senaste mätning ', ...dataObject.changeSinceLast],
   ]);
 
@@ -161,7 +161,7 @@ function drawStacked(dataObject, chartId) {
   options.isStacked = 'percent';
   
   const data = new google.visualization.arrayToDataTable([
-    ['Parti', ...dataObject.seriesNames],
+    ['', ...dataObject.seriesNames],
     ['', ...dataObject.results],
   ]);
 
@@ -206,14 +206,14 @@ function drawBarsV(dataObject, chartId) {
 }
 
 
-// Line chart or history/trendlines
+// Line chart for history/trendlines
 function drawLines(dataObject, chartId) {
 
   const options = new Options();
   options.colors = Object.values(dataObject.seriesColors);
  
   const data = new google.visualization.arrayToDataTable([
-    ['Tidpunkt', ...(
+    ['', ...(
       dataObject.longSeriesNames ? 
       dataObject.longSeriesNames : 
       dataObject.seriesNames)],
@@ -241,7 +241,7 @@ function drawTable(dataObject, chartId, transposeTable) {
     ]));
   } else {
     data = new google.visualization.arrayToDataTable([
-    ['Tidpunkt', ...dataObject.seriesNames],
+    ['', ...dataObject.seriesNames],
     ...dataObject.history
     ]);
   }
